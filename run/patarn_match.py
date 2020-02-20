@@ -28,7 +28,7 @@ def titlename(list):
     return titlelist;
 
 def make_title():
-    kiji1='wikimanga.txt'
+    kiji1='run/wikimanga.txt'
     f = open(kiji1,'r',encoding='utf-8')
     list = f.read().split('</doc>')# ファイル終端まで全て読んだデータを返す
     f.close()
