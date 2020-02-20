@@ -10,9 +10,7 @@ from linebot.models import (
    FollowEvent, MessageEvent, TextMessage, TextSendMessage, ImageMessage, ImageSendMessage, TemplateSendMessage, ButtonsTemplate, PostbackTemplateAction, MessageTemplateAction, URITemplateAction
 )
 import os
-import sys
-sys.path.append('../desktop/春課題')
-from patarn_match import make_title
+from run.patarn_match import make_title
 
 # 軽量なウェブアプリケーションフレームワーク:Flask
 app = Flask(__name__)
