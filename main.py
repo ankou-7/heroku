@@ -11,7 +11,7 @@ from linebot.models import (
        QuickReplyButton, MessageAction, QuickReply,
 )
 import os
-from patarn_match as pat
+import patarn_match as pat
 
 # 軽量なウェブアプリケーションフレームワーク:Flask
 app = Flask(__name__)
