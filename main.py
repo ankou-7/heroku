@@ -46,11 +46,12 @@ f.close()
 def handle_message(event):
 
     word = event.message.text
-    title = pat.titlename(title_list)
+    manga_title = pat.titlename(title_list)
+    text = manga_title[word]
     
     line_bot_api.reply_message(
        event.reply_token,
-       TextSendMessage(text=title[200])
+       TextSendMessage(text=text)
     )
 
 #def response_message(event):
