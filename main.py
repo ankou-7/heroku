@@ -51,10 +51,10 @@ def handle_message(event):
                event.reply_token,
                [
                     TextSendMessage(text="お疲れ様です" + chr(0x10002D)),
-                    TextSendMessage(text="メニューから選んでね！！"),
-                    TextSendMessage(text="1 : クイズをする"),
-                    TextSendMessage(text="2 : お話をする"),
-                    TextSendMessage(text="3 : 物語を作る"),
+                    TextSendMessage(text="メニューから選んでね！！\n1 : クイズをする\n2 : お話をする\n3 : 物語を作る"),
+                    #TextSendMessage(text="1 : クイズをする"),
+                    #TextSendMessage(text="2 : お話をする"),
+                    #TextSendMessage(text="3 : 物語を作る"),
                 ]
             )
         if (event.message.text == "ありがとう！") or (event.message.text == "ありがとう") or (event.message.text == "ありがと！") or (event.message.text == "ありがと"):
