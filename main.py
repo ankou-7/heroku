@@ -35,17 +35,22 @@ def callback():
    except InvalidSignatureError:
        abort(400)
    return 'OK'
-   
+
+kiji1='wikimanga.txt'
+f = open(kiji1,'r',encoding='utf-8')
+title_list = f.read().split('</doc>')# ファイル終端まで全て読んだデータを返す
+f.close()
+
 # MessageEvent
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
 
     word = event.message.text
-    title = pat.make_title()
+    title = pat.titlename(title_list)
     
     line_bot_api.reply_message(
        event.reply_token,
-       TextSendMessage(text=title[word])
+       TextSendMessage(text=title[200])
     )
 
 #def response_message(event):
