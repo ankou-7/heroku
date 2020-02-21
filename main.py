@@ -11,7 +11,7 @@ from linebot.models import (
        QuickReplyButton, MessageAction, QuickReply,
 )
 import os
-from run.patarn_match import make_title
+from patarn_match as pat
 
 # 軽量なウェブアプリケーションフレームワーク:Flask
 app = Flask(__name__)
@@ -39,9 +39,13 @@ def callback():
 # MessageEvent
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+
+    #word = event.message.text + "でゴンス"
+    title = pat.maketitle()
+    
     line_bot_api.reply_message(
        event.reply_token,
-       TextSendMessage(text=event.message.text+"でゴンス")
+       TextSendMessage(text=title[3862])
     )
 
 #def response_message(event):
