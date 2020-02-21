@@ -44,15 +44,42 @@ f.close()
 # MessageEvent
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-
-    word = event.message.text
-    manga_title = pat.titlename(title_list)
-    text = manga_title[int(word)]
     
-    line_bot_api.reply_message(
-       event.reply_token,
-       TextSendMessage(text=text)
-    )
+    if event.type == "message":
+        if (event.message.text == "へいbot") or (event.message.text == "bot"):
+            line_bot_api.reply_message(
+               event.reply_token,
+               [
+                    TextSendMessage(text="お疲れ様です" + chr(0x10002D)),
+                    TextSendMessage(text="メニューから選んでね！！"),
+                    TextSendMessage(text="1 : クイズをする"),
+                    TextSendMessage(text="2 : お話をする"),
+                    TextSendMessage(text="3 : 物語を作る"),
+                ]
+            )
+        if (event.message.text == "ありがとう！") or (event.message.text == "ありがとう") or (event.message.text == "ありがと！") or (event.message.text == "ありがと"):
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    TextSendMessage(text="どういたしまして！またね" + chr(0x100033)),
+                ]
+        )
+        else:
+        line_bot_api.reply_message(
+            event.reply_token,
+            [
+                TextSendMessage(text="ちょっと何言ってるかわからないな"+ chr(0x100029) + chr(0x100098)),
+                TextSendMessage(text="もう一回いって"),
+            ]
+        )
+    #word = event.message.text
+    #manga_title = pat.titlename(title_list)
+    #text = manga_title[int(word)]
+    
+    #line_bot_api.reply_message(
+       #event.reply_token,
+       #TextSendMessage(text=text)
+    #S)
 
 #def response_message(event):
  #   language_list = ["Ruby", "Python", "PHP", "Java", "C"]
