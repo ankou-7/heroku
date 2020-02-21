@@ -65,13 +65,13 @@ def handle_message(event):
                 ]
         )
         else:
-        line_bot_api.reply_message(
-            event.reply_token,
-            [
-                TextSendMessage(text="ちょっと何言ってるかわからないな"+ chr(0x100029) + chr(0x100098)),
-                TextSendMessage(text="もう一回いって"),
-            ]
-        )
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    TextSendMessage(text="ちょっと何言ってるかわからないな"+ chr(0x100029) + chr(0x100098)),
+                    TextSendMessage(text="もう一回いって"),
+                ]
+            )
     #word = event.message.text
     #manga_title = pat.titlename(title_list)
     #text = manga_title[int(word)]
