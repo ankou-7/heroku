@@ -36,3 +36,7 @@ def make_title():
     
     return title
 
+def test():
+    word="成功"
+    return word
+

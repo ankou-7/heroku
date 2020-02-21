@@ -41,11 +41,11 @@ def callback():
 def handle_message(event):
 
     #word = event.message.text + "でゴンス"
-    title = pat.maketitle()
+    title = pat.test()
     
     line_bot_api.reply_message(
        event.reply_token,
-       TextSendMessage(text=title[3862])
+       TextSendMessage(text=title)
     )
 
 #def response_message(event):
