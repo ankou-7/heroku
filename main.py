@@ -40,12 +40,12 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
 
-    #word = event.message.text + "でゴンス"
+    word = event.message.text
     title = pat.make_title()
     
     line_bot_api.reply_message(
        event.reply_token,
-       TextSendMessage(text=title[0])
+       TextSendMessage(text=title[word])
     )
 
 #def response_message(event):
