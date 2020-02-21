@@ -38,21 +38,21 @@ def callback():
    
 # MessageEvent
 @handler.add(MessageEvent, message=TextMessage)
-#def handle_message(event):
- #   line_bot_api.reply_message(
-  #     event.reply_token,
-   #    TextSendMessage(text=event.message.text+"でゴンス")
-    #)
+def handle_message(event):
+    line_bot_api.reply_message(
+       event.reply_token,
+       TextSendMessage(text=event.message.text+"でゴンス")
+    )
 
-def response_message(event):
-    language_list = ["Ruby", "Python", "PHP", "Java", "C"]
+#def response_message(event):
+ #   language_list = ["Ruby", "Python", "PHP", "Java", "C"]
 
-    items = [QuickReplyButton(action=MessageAction(label=f"{language}", text=f"{language}が好き")) for language in language_list]
+  #  items = [QuickReplyButton(action=MessageAction(label=f"{language}", text=f"{language}が好き")) for language in language_list]
 
-    messages = TextSendMessage(text="どの言語が好きですか？",
-                               quick_reply=QuickReply(items=items))
+   # messages = TextSendMessage(text="どの言語が好きですか？",
+    #                           quick_reply=QuickReply(items=items))
 
-    line_bot_api.reply_message(event.reply_token, messages=messages)
+    #line_bot_api.reply_message(event.reply_token, messages=messages)
 
 
 if __name__ == "__main__":
