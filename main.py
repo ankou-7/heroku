@@ -129,8 +129,8 @@ def handle_message(event):
                             TextSendMessage(text="もう一問やりますか？\n【はい/いいえ】"),
                         ]
                     )
-            if(flag==1):
-                elif (event.message.text == "いいえ"):
+            elif(flag==1):
+                if (event.message.text == "いいえ"):
                     qui.change_db("menu")
                     line_bot_api.reply_message(
                             event.reply_token,
@@ -138,7 +138,6 @@ def handle_message(event):
                                 TextSendMessage(text="またね"),
                             ]
                     )
-
     if activity == 'wiki':
         if event.type == "message":
             if (event.message.text != "終了"):
