@@ -100,13 +100,13 @@ def handle_message(event):
                     ]
                 )
             elif (event.message.text == "終了") or (event.message.text == "バイバイ"):
-            qui.change_db("menu")
-            line_bot_api.reply_message(
-                    event.reply_token,
-                    [
-                        TextSendMessage(text="またね"),
-                    ]
-            )
+                qui.change_db("menu")
+                line_bot_api.reply_message(
+                        event.reply_token,
+                        [
+                            TextSendMessage(text="またね"),
+                        ]
+                )
     #word = event.message.text
     #manga_title = pat.titlename(title_list)
     #text = manga_title[int(word)]
