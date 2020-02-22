@@ -135,7 +135,6 @@ def handle_message(event):
                     Q,A = pat.make_quize(bunlist)
                     qui.change_quize_db(Q,A)
                     qui.change_db("0","flag")
-                    qui.change_db("menu","activity")
                     line_bot_api.reply_message(
                             event.reply_token,
                             [
