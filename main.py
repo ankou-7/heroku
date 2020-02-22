@@ -132,7 +132,7 @@ def handle_message(event):
             elif(flag==1):
                 if (event.message.text == "いいえ"):
                     qui.change_db("0","flag")
-                    qui.change_db("menu")
+                    qui.change_db("menu","activity")
                     line_bot_api.reply_message(
                             event.reply_token,
                             [
