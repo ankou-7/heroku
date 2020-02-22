@@ -48,8 +48,8 @@ def get_db():
     cursor.execute("SELECT * FROM activity")
      
     for row in cursor:
-        print(row)
-        return row
+        #print(row)
+        return row['activity']
      
     # 保存を実行
     connection.commit()
@@ -122,4 +122,7 @@ def make_db(name,act):
 #name = "activity"
 #table = """CREATE TABLE """ + name + """ (activity varchar(30))"""
 #print(table)
+
+  
+#t=get_db()
 
