@@ -49,7 +49,7 @@ def handle_message(event):
     
     activity=qui.get_db()
     
-    if activity == "menu":
+    if activity == 'menu':
         if event.type == "message":
             if (event.message.text == "へいbot") or (event.message.text == "bot"):
                 line_bot_api.reply_message(
@@ -82,7 +82,7 @@ def handle_message(event):
                         TextSendMessage(text="もう一回いって"),
                     ]
                 )
-    if activity == "quize":
+    if activity == 'quize':
         if event.type == "message":
             if (event.message.text == "あ") :
                 line_bot_api.reply_message(
