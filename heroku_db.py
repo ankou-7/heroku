@@ -192,9 +192,10 @@ def delete_table(table):
 #table = """CREATE TABLE """ + name + """ (activity varchar(30))"""
 #print(table)
 #make_db("quize_table")
-change_quize_db("おに","犬")
-a , b = get_quize_db()
-print(get_quize_db()[0])
+#change_quize_db("おに","犬")
+#a , b = get_quize_db()
+#print(get_quize_db()[0])
 #delete_table("quize_table")
+#change_db("menu")
 #t=get_db()
 
