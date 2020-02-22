@@ -56,7 +56,7 @@ def handle_message(event):
                    event.reply_token,
                    [
                         TextSendMessage(text="お疲れ様です" + chr(0x10002D)),
-                        TextSendMessage(text="メニューから選んでね！！\n1 : クイズをする\n2 : お話をする\n3 : 物語を作る\n4 : 漫画を検索する"),
+                        TextSendMessage(text="メニューから選んでね！！\n1 : クイズをする\n2 : お話をする\n3 : 物語を作る\n4 : (漫画を)検索する"),
                     ]
                 )
             elif (event.message.text == "ありがとう！") or (event.message.text == "ありがとう") or (event.message.text == "ありがと！") or (event.message.text == "ありがと"):
@@ -72,6 +72,14 @@ def handle_message(event):
                         event.reply_token,
                         [
                             TextSendMessage(text="やりましょう"),
+                        ]
+                )
+            elif (event.message.text == "4") or (event.message.text == "検索したい"):
+                qui.change_db("wiki")
+                line_bot_api.reply_message(
+                        event.reply_token,
+                        [
+                            TextSendMessage(text="検索したい語句を入力してね"),
                         ]
                 )
             elif (event.message.text == "終了") or (event.message.text == "バイバイ"):
@@ -107,6 +115,39 @@ def handle_message(event):
                             TextSendMessage(text="またね"),
                         ]
                 )
+    if activity == 'wiki':
+        if event.type == "message":
+            if (event.message.text != "終了"):
+                send_message = event.message.text
+                #正常に検索結果が返った場合
+                try:
+                    wikipedia_page = wikipedia.page(send_message)
+                    # wikipedia.page()の処理で、ページ情報が取得できれば、以下のようにタイトル、リンク、サマリーが取得できる。
+                    wikipedia_title = wikipedia_page.title
+                    wikipedia_url = wikipedia_page.url
+                    wikipedia_summary = wikipedia.summary(send_message)
+                    reply_message = '【' + wikipedia_title + '】\n' + wikipedia_summary + '\n\n' + '【詳しくはこちら】\n' + wikipedia_url
+                # ページが見つからなかった場合
+                except wikipedia.exceptions.PageError:
+                    reply_message = '【' + send_message + '】\nについての情報は見つかりませんでした。'
+                # 曖昧さ回避にひっかかった場合
+                except wikipedia.exceptions.DisambiguationError as e:
+                    disambiguation_list = e.options
+                    reply_message = '複数の候補が返ってきました。以下の候補から、お探しの用語に近いものを再入力してください。\n\n'
+                    for word in disambiguation_list:
+                        reply_message += '・' + word + '\n'
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(reply_message)
+                )
+            elif (event.message.text == "終了") or (event.message.text == "バイバイ"):
+                qui.change_db("menu")
+                line_bot_api.reply_message(
+                        event.reply_token,
+                        [
+                            TextSendMessage(text="またね"),
+                        ]
+            )
     #word = event.message.text
     #manga_title = pat.titlename(title_list)
     #text = manga_title[int(word)]
