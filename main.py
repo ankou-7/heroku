@@ -13,6 +13,7 @@ from linebot.models import (
 import os
 import wikipedia
 import patarn_match as pat
+import quize_db as qui
 
 # 軽量なウェブアプリケーションフレームワーク:Flask
 app = Flask(__name__)
@@ -42,13 +43,12 @@ f = open(kiji1,'r',encoding='utf-8')
 title_list = f.read().split('</doc>')# ファイル終端まで全て読んだデータを返す
 f.close()
 
-#グローバル変数
-activity="menu"
-
 # MessageEvent
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-
+    
+    activity=qui.get_db()
+    
     if activity == "menu":
         if event.type == "message":
             if (event.message.text == "へいbot") or (event.message.text == "bot"):
@@ -67,7 +67,7 @@ def handle_message(event):
                     ]
             )
             if (event.message.text == "1") or (event.message.text == "クイズしようぜ"):
-                activity = "quize"
+                qui.change_db("quize")
                 line_bot_api.reply_message(
                         event.reply_token,
                         [
