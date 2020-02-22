@@ -112,6 +112,7 @@ def handle_message(event):
             answer=qui.get_quize_db()[1]
             if (flag==0):
                 if (event.message.text == answer):
+                    qui.change_db("1","flag")
                     line_bot_api.reply_message(
                        event.reply_token,
                        [
@@ -119,8 +120,8 @@ def handle_message(event):
                             TextSendMessage(text="もう一問やりますか？\n【はい/いいえ】"),
                         ]
                     )
-                    qui.change_db("1","flag")
                 else:
+                    qui.change_db("1","flag")
                     line_bot_api.reply_message(
                        event.reply_token,
                        [
@@ -128,9 +129,20 @@ def handle_message(event):
                             TextSendMessage(text="もう一問やりますか？\n【はい/いいえ】"),
                         ]
                     )
-                    qui.change_db("1","flag")
             elif(flag==1):
-                if (event.message.text == "いいえ"):
+                if (event.message.text == "はい"):
+                    bunlist = pat.kuuhakujokyo(re.split('[\n。\t]', kiji_list[3862]))
+                    Q,A = pat.make_quize(bunlist)
+                    qui.change_quize_db(Q,A)
+                    qui.change_db("0","flag")
+                    qui.change_db("menu","activity")
+                    line_bot_api.reply_message(
+                            event.reply_token,
+                            [
+                                TextSendMessage(text="【問題】\n" + Q),
+                            ]
+                    )
+                elif (event.message.text == "いいえ"):
                     qui.change_db("0","flag")
                     qui.change_db("menu","activity")
                     line_bot_api.reply_message(
@@ -139,6 +151,14 @@ def handle_message(event):
                                 TextSendMessage(text="またね"),
                             ]
                     )
+                else:
+                    line_bot_api.reply_message(
+                            event.reply_token,
+                            [
+                                TextSendMessage(text="【はい/いいえ】で答えてね"),
+                            ]
+                    )
+                    
     if activity == 'wiki':
         if event.type == "message":
             if (event.message.text != "終了"):
