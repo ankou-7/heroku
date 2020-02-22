@@ -196,6 +196,7 @@ def delete_table(table):
 #a , b = get_quize_db()
 #print(get_quize_db()[0])
 #delete_table("activity")
-#change_db("menu")
+#change_db("menu","activity")
+#change_db("0","flag")
 #t,u=get_db()
 

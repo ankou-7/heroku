@@ -112,7 +112,6 @@ def handle_message(event):
             answer=qui.get_quize_db()[1]
             if (flag==0):
                 if (event.message.text == answer):
-                    qui.change_db("1","flag")
                     line_bot_api.reply_message(
                        event.reply_token,
                        [
@@ -120,8 +119,8 @@ def handle_message(event):
                             TextSendMessage(text="もう一問やりますか？\n【はい/いいえ】"),
                         ]
                     )
-                else:
                     qui.change_db("1","flag")
+                else:
                     line_bot_api.reply_message(
                        event.reply_token,
                        [
@@ -129,6 +128,7 @@ def handle_message(event):
                             TextSendMessage(text="もう一問やりますか？\n【はい/いいえ】"),
                         ]
                     )
+                    qui.change_db("1","flag")
             elif(flag==1):
                 if (event.message.text == "いいえ"):
                     qui.change_db("0","flag")
