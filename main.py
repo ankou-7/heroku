@@ -50,7 +50,7 @@ title = pat.titlename(kiji_list)
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     
-    activity=qui.get_db()
+    activity=qui.get_db()[0]
     
     if activity == 'menu':
         if event.type == "message":
@@ -73,7 +73,7 @@ def handle_message(event):
                 bunlist = pat.kuuhakujokyo(re.split('[\n。\t]', kiji_list[3485]))
                 Q,A = pat.make_quize(bunlist)
                 qui.change_quize_db(Q,A)
-                qui.change_db("quize")
+                qui.change_db("quize","activity")
                 line_bot_api.reply_message(
                         event.reply_token,
                         [
@@ -83,7 +83,7 @@ def handle_message(event):
                         ]
                 )
             elif (event.message.text == "4") or (event.message.text == "検索したい"):
-                qui.change_db("wiki")
+                qui.change_db("wiki","activity")
                 line_bot_api.reply_message(
                         event.reply_token,
                         [
@@ -91,7 +91,7 @@ def handle_message(event):
                         ]
                 )
             elif (event.message.text == "終了") or (event.message.text == "バイバイ"):
-                qui.change_db("menu")
+                qui.change_db("menu","activity")
                 line_bot_api.reply_message(
                         event.reply_token,
                         [
@@ -108,11 +108,11 @@ def handle_message(event):
                 )
     if activity == 'quize':
         if event.type == "message":
-            flag=0
+            flag=qui.get_db()[1]
             answer=qui.get_quize_db()[1]
             if (flag==0):
                 if (event.message.text == answer):
-                    flag=1
+                    qui.change_db(1,"flag")
                     line_bot_api.reply_message(
                        event.reply_token,
                        [
@@ -121,7 +121,7 @@ def handle_message(event):
                         ]
                     )
                 else:
-                    flag=1
+                    qui.change_db(1,"flag")
                     line_bot_api.reply_message(
                        event.reply_token,
                        [
@@ -131,6 +131,7 @@ def handle_message(event):
                     )
             elif(flag==1):
                 if (event.message.text == "いいえ"):
+                    qui.change_db(0,"flagß")
                     qui.change_db("menu")
                     line_bot_api.reply_message(
                             event.reply_token,
@@ -164,7 +165,7 @@ def handle_message(event):
                     TextSendMessage(text=reply_message)
                 )
             elif (event.message.text == "終了"):
-                qui.change_db("menu")
+                qui.change_db("menu","activity)
                 line_bot_api.reply_message(
                         event.reply_token,
                         [

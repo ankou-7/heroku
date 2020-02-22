@@ -23,15 +23,15 @@ def make_db(name):
     cursor = connection.cursor()
     
     # テーブルの作成(すでにあると使えない)
-    table = """CREATE TABLE """ + name + """ (activity varchar(30))"""
+    table = """CREATE TABLE """ + name + """ (activity varchar(30), flag int(3))"""
     table2 = """CREATE TABLE """ + name + """ (Quize varchar(100), Answer varchar(100))"""
-    cursor.execute(table2)
+    cursor.execute(table)
 
     
     #データの追加
-    text="""insert into activity (activity) values("menu")"""
+    text="""insert into activity (activity,flag) values("menu",0)"""
     text2="""insert into quize_table (Quize,Answer) values("a","b")"""
-    cursor.execute(text2)
+    cursor.execute(text)
     
     # 保存を実行
     connection.commit()
@@ -41,7 +41,7 @@ def make_db(name):
     
 #####################################################################################
  
-def change_db(act):
+def change_db(act,t):
     connection = pymysql.connect(
             host='us-cdbr-iron-east-04.cleardb.net',
             user='ba76092fa5db19',
@@ -54,7 +54,7 @@ def change_db(act):
     cursor = connection.cursor()
     
     #データの更新
-    text="""UPDATE activity set activity='""" + act + """'"""
+    text="""UPDATE activity set """ + t + """='""" + act + """'"""
     cursor.execute(text)
     
      # 保存を実行
@@ -81,7 +81,7 @@ def get_db():
      
     for row in cursor:
         #print(row)
-        return row['activity']
+        return row['activity'],row['flag']
      
     # 保存を実行
     connection.commit()
@@ -191,11 +191,11 @@ def delete_table(table):
 #name = "activity"
 #table = """CREATE TABLE """ + name + """ (activity varchar(30))"""
 #print(table)
-#make_db("quize_table")
+#make_db("activity")
 #change_quize_db("おに","犬")
 #a , b = get_quize_db()
 #print(get_quize_db()[0])
-#delete_table("quize_table")
+#delete_table("activity")
 #change_db("menu")
-#t=get_db()
+#t,u=get_db()
 
