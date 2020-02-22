@@ -13,7 +13,7 @@ from linebot.models import (
 import os
 import wikipedia
 import patarn_match as pat
-import quize_db as qui
+import heroku_db as qui
 
 # 軽量なウェブアプリケーションフレームワーク:Flask
 app = Flask(__name__)
