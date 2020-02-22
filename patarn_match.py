@@ -8,6 +8,19 @@ Created on Fri Feb 21 03:04:00 2020
 
 import re
 
+def kuuhakujokyo(list):
+    count=0;
+    list.pop(0);
+    for i in range(len(list)):
+        if len(list[count])==0:
+            list.pop(count);
+            count=count-1;
+        count=count+1;
+    
+    list.pop(len(list)-1);
+    return list;
+
+#漫画タイトルを取り出して格納
 def titlename(list):
     titlelist=[]
     for i in range(len(list)):
@@ -27,16 +40,31 @@ def titlename(list):
 
     return titlelist
 
-def make_title():
-    #kiji1='wikimanga.txt'
-    #f = open(kiji1,'r',encoding='utf-8')
-    #list = f.read().split('</doc>')# ファイル終端まで全て読んだデータを返す
-    #f.close()
-    title=titlename(list)
+#漫画記事を読み込む
+def make_kiji():
+    kiji1='wikimanga.txt'
+    f = open(kiji1,'r',encoding='utf-8')
+    list = f.read().split('</doc>')# ファイル終端まで全て読んだデータを返す
+    f.close()
+    #title=titlename(list)
     
-    return title
+    return list
 
-def test():
-    word="成功"
-    return word
+def make_quize(bunlist):
+    i=bunlist[2].find("による")
+    j=bunlist[2].find("、")
+    ans=bunlist[2][j+1:i]
+    qui=bunlist[2].replace(ans, "誰")
+    return qui,ans
+#    print(quize+"ですか？")
+#    print("解答")
+#    user_ans=input()
+#    if user_ans==ans:
+#        print("正解")
+#    else:
+#        print("不正解")
 
+kiji_list = make_kiji()
+title = titlename(kiji_list)
+bunlist=kuuhakujokyo(re.split('[\n。\t]', kiji_list[3485]))
+make_quize(bunlist)

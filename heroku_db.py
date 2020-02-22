@@ -8,6 +8,38 @@ Created on Sat Feb 22 19:07:35 2020
 
 import pymysql
 import pymysql.cursors
+
+def make_db(name):
+    
+    connection = pymysql.connect(
+            host='us-cdbr-iron-east-04.cleardb.net',
+            user='ba76092fa5db19',
+            password='c256ebea',
+            db='heroku_512e2761612043e',
+            charset='utf8',
+            cursorclass=pymysql.cursors.DictCursor
+    )
+    
+    cursor = connection.cursor()
+    
+    # テーブルの作成(すでにあると使えない)
+    table = """CREATE TABLE """ + name + """ (activity varchar(30))"""
+    table2 = """CREATE TABLE """ + name + """ (Quize varchar(100), Answer varchar(100))"""
+    cursor.execute(table2)
+
+    
+    #データの追加
+    text="""insert into activity (activity) values("menu")"""
+    text2="""insert into quize_table (Quize,Answer) values("a","b")"""
+    cursor.execute(text2)
+    
+    # 保存を実行
+    connection.commit()
+     
+    # 接続を閉じる
+    connection.close()
+    
+#####################################################################################
  
 def change_db(act):
     connection = pymysql.connect(
@@ -57,8 +89,8 @@ def get_db():
     # 接続を閉じる
     connection.close()
     
-def make_db(name,act):
-    
+#########################################################################################
+def change_quize_db(qui,ans):
     connection = pymysql.connect(
             host='us-cdbr-iron-east-04.cleardb.net',
             user='ba76092fa5db19',
@@ -70,18 +102,55 @@ def make_db(name,act):
     
     cursor = connection.cursor()
     
-    # テーブルの作成(すでにあると使えない)
-    table = """CREATE TABLE """ + name + """ (activity varchar(30))"""
-    cursor.execute(table)
-    
-    #データの追加
-    text="""insert into activity (activity) values('""" + act + """')"""
+    #データの更新
+    text="""UPDATE quize_table set Quize='""" + qui + """'"""
+    cursor.execute(text)
+    text="""UPDATE quize_table set Answer='""" + ans + """'"""
     cursor.execute(text)
     
-    # 保存を実行
     connection.commit()
+    connection.close()
+
+def get_quize_db():
+    connection = pymysql.connect(
+            host='us-cdbr-iron-east-04.cleardb.net',
+            user='ba76092fa5db19',
+            password='c256ebea',
+            db='heroku_512e2761612043e',
+            charset='utf8',
+            cursorclass=pymysql.cursors.DictCursor
+    )
+    
+    cursor = connection.cursor()
+    
+    # 一覧の表示
+    cursor.execute("SELECT * FROM quize_table")
      
-    # 接続を閉じる
+#    rows = cursor.fetchall()
+#    print(rows)
+    for row in cursor:
+        #print(row)
+        return row['Quize'],row['Answer']
+     
+    connection.commit()
+    connection.close()
+    
+def delete_table(table):
+    connection = pymysql.connect(
+            host='us-cdbr-iron-east-04.cleardb.net',
+            user='ba76092fa5db19',
+            password='c256ebea',
+            db='heroku_512e2761612043e',
+            charset='utf8',
+            cursorclass=pymysql.cursors.DictCursor
+    )
+    
+    cursor = connection.cursor()
+    
+    text = "DROP TABLE IF EXISTS " + table
+    cursor.execute(text)
+    
+    connection.commit()
     connection.close()
     
 ##cursor.execute("DROP TABLE IF EXISTS test")
@@ -118,11 +187,14 @@ def make_db(name,act):
 ## 接続を閉じる
 #connection.close()
     
-#make_db("activity","menu")
+
 #name = "activity"
 #table = """CREATE TABLE """ + name + """ (activity varchar(30))"""
 #print(table)
-
-  
-t=get_db()
+#make_db("quize_table")
+change_quize_db("おに","犬")
+a , b = get_quize_db()
+print(get_quize_db()[0])
+#delete_table("quize_table")
+#t=get_db()
 

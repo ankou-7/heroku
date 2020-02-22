@@ -40,10 +40,10 @@ def callback():
        abort(400)
    return 'OK'
 
-kiji1='wikimanga.txt'
-f = open(kiji1,'r',encoding='utf-8')
-title_list = f.read().split('</doc>')# ファイル終端まで全て読んだデータを返す
-f.close()
+#漫画の記事を読み込んでkiji_listに格納
+kiji_list = pat.make_kiji()
+#漫画のタイトルを格納
+title = pat.titlename(kiji_list)
 
 # MessageEvent
 @handler.add(MessageEvent, message=TextMessage)
@@ -69,11 +69,16 @@ def handle_message(event):
                     ]
             )
             elif (event.message.text == "1") or (event.message.text == "クイズしようぜ"):
+                bunlist = pat.kuuhakujokyo(re.split('[\n。\t]', kiji_list[3485]))
+                Q,A = pat.make_quize(bunlist)
+                qui.change_quize_db(Q,A)
                 qui.change_db("quize")
                 line_bot_api.reply_message(
                         event.reply_token,
                         [
                             TextSendMessage(text="やりましょう"),
+                            TextSendMessage(text="問題を出すので答えて下さい"),
+                            TextSendMessage(text="【問題】\n" + Q),
                         ]
                 )
             elif (event.message.text == "4") or (event.message.text == "検索したい"):
@@ -102,11 +107,11 @@ def handle_message(event):
                 )
     if activity == 'quize':
         if event.type == "message":
-            if (event.message.text == "あ") :
+            if (event.message.text == qui.get_quize_db()[1]) :
                 line_bot_api.reply_message(
                    event.reply_token,
                    [
-                        TextSendMessage(text="成功です。"),
+                        TextSendMessage(text="正解です。\n素晴らしいですね！！"),
                     ]
                 )
             elif (event.message.text == "終了") or (event.message.text == "バイバイ"):
@@ -142,7 +147,7 @@ def handle_message(event):
                     event.reply_token,
                     TextSendMessage(text=reply_message)
                 )
-            elif (event.message.text == "終了") or (event.message.text == "バイバイ"):
+            elif (event.message.text == "終了"):
                 qui.change_db("menu")
                 line_bot_api.reply_message(
                         event.reply_token,
