@@ -42,12 +42,13 @@ f = open(kiji1,'r',encoding='utf-8')
 title_list = f.read().split('</doc>')# ファイル終端まで全て読んだデータを返す
 f.close()
 
+#グローバル変数
+activity="menu"
+
 # MessageEvent
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
 
-    activity="menu"
-    
     if activity == "menu":
         if event.type == "message":
             if (event.message.text == "へいbot") or (event.message.text == "bot"):
