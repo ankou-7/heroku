@@ -165,7 +165,7 @@ def handle_message(event):
                     TextSendMessage(text=reply_message)
                 )
             elif (event.message.text == "終了"):
-                qui.change_db("menu","activity)
+                qui.change_db("menu","activity")
                 line_bot_api.reply_message(
                         event.reply_token,
                         [
