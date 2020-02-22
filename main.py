@@ -11,6 +11,7 @@ from linebot.models import (
        QuickReplyButton, MessageAction, QuickReply,
 )
 import os
+import wikipedia
 import patarn_match as pat
 
 # 軽量なウェブアプリケーションフレームワーク:Flask
@@ -44,34 +45,51 @@ f.close()
 # MessageEvent
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+
+    activity="menu"
     
-    if event.type == "message":
-        if (event.message.text == "へいbot") or (event.message.text == "bot"):
-            line_bot_api.reply_message(
-               event.reply_token,
-               [
-                    TextSendMessage(text="お疲れ様です" + chr(0x10002D)),
-                    TextSendMessage(text="メニューから選んでね！！\n1 : クイズをする\n2 : お話をする\n3 : 物語を作る"),
-                    #TextSendMessage(text="1 : クイズをする"),
-                    #TextSendMessage(text="2 : お話をする"),
-                    #TextSendMessage(text="3 : 物語を作る"),
-                ]
+    if activity == "menu":
+        if event.type == "message":
+            if (event.message.text == "へいbot") or (event.message.text == "bot"):
+                line_bot_api.reply_message(
+                   event.reply_token,
+                   [
+                        TextSendMessage(text="お疲れ様です" + chr(0x10002D)),
+                        TextSendMessage(text="メニューから選んでね！！\n1 : クイズをする\n2 : お話をする\n3 : 物語を作る\n4 : 漫画を検索する"),
+                    ]
+                )
+            if (event.message.text == "ありがとう！") or (event.message.text == "ありがとう") or (event.message.text == "ありがと！") or (event.message.text == "ありがと"):
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    [
+                        TextSendMessage(text="どういたしまして！またね" + chr(0x100033)),
+                    ]
             )
-        if (event.message.text == "ありがとう！") or (event.message.text == "ありがとう") or (event.message.text == "ありがと！") or (event.message.text == "ありがと"):
-            line_bot_api.reply_message(
-                event.reply_token,
-                [
-                    TextSendMessage(text="どういたしまして！またね" + chr(0x100033)),
-                ]
-        )
-        else:
-            line_bot_api.reply_message(
-                event.reply_token,
-                [
-                    TextSendMessage(text="ちょっと何言ってるかわからないな"+ chr(0x100029) + chr(0x100098)),
-                    TextSendMessage(text="もう一回いって"),
-                ]
-            )
+            if (event.message.text == "1") or (event.message.text == "クイズしようぜ"):
+                activity = "quize"
+                line_bot_api.reply_message(
+                        event.reply_token,
+                        [
+                            TextSendMessage(text="やりましょう"),
+                        ]
+                )
+            else:
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    [
+                        TextSendMessage(text="ちょっと何言ってるかわからないな"+ chr(0x100029) + chr(0x100098)),
+                        TextSendMessage(text="もう一回いって"),
+                    ]
+                )
+    if activity == "quize":
+        if event.type == "message":
+            if (event.message.text == "あ") :
+                line_bot_api.reply_message(
+                   event.reply_token,
+                   [
+                        TextSendMessage(text="成功です。"),
+                    ]
+                )
     #word = event.message.text
     #manga_title = pat.titlename(title_list)
     #text = manga_title[int(word)]
