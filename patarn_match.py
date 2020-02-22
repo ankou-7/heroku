@@ -55,6 +55,7 @@ def make_quize(bunlist):
     j=bunlist[2].find("、")
     ans=bunlist[2][j+1:i]
     qui=bunlist[2].replace(ans, "誰")
+    qui=qui+"ですか？"
     return qui,ans
 #    print(quize+"ですか？")
 #    print("解答")

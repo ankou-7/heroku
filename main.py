@@ -108,14 +108,25 @@ def handle_message(event):
                 )
     if activity == 'quize':
         if event.type == "message":
-            if (event.message.text == qui.get_quize_db()[1]) :
+            answer=qui.get_quize_db()[1]
+            if (event.message.text == answer) :
                 line_bot_api.reply_message(
                    event.reply_token,
                    [
                         TextSendMessage(text="正解です。\n素晴らしいですね！！"),
+                        TextSendMessage(text="もう一問やりますか？\n【はい/いいえ】"),
                     ]
                 )
-            elif (event.message.text == "終了") or (event.message.text == "バイバイ"):
+            else:
+                line_bot_api.reply_message(
+                   event.reply_token,
+                   [
+                        TextSendMessage(text="負正解です。\n正解は"+answer+"です"),
+                        TextSendMessage(text="もう一問やりますか？\n【はい/いいえ】"),
+                    ]
+                )
+                
+            if (event.message.text == "いいえ"):
                 qui.change_db("menu")
                 line_bot_api.reply_message(
                         event.reply_token,
