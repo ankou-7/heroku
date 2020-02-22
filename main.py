@@ -10,6 +10,7 @@ from linebot.models import (
    FollowEvent, MessageEvent, TextMessage, TextSendMessage, ImageMessage, ImageSendMessage, TemplateSendMessage, ButtonsTemplate, PostbackTemplateAction, MessageTemplateAction, URITemplateAction,
        QuickReplyButton, MessageAction, QuickReply,
 )
+import re
 import os
 import wikipedia
 import patarn_match as pat
