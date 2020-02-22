@@ -108,11 +108,11 @@ def handle_message(event):
                 )
     if activity == 'quize':
         if event.type == "message":
-            flag=qui.get_db()[1]
+            flag=int(qui.get_db()[1])
             answer=qui.get_quize_db()[1]
             if (flag==0):
                 if (event.message.text == answer):
-                    qui.change_db(1,"flag")
+                    qui.change_db("1","flag")
                     line_bot_api.reply_message(
                        event.reply_token,
                        [
@@ -121,7 +121,7 @@ def handle_message(event):
                         ]
                     )
                 else:
-                    qui.change_db(1,"flag")
+                    qui.change_db("1","flag")
                     line_bot_api.reply_message(
                        event.reply_token,
                        [
@@ -131,7 +131,7 @@ def handle_message(event):
                     )
             elif(flag==1):
                 if (event.message.text == "いいえ"):
-                    qui.change_db(0,"flagß")
+                    qui.change_db("0","flag")
                     qui.change_db("menu")
                     line_bot_api.reply_message(
                             event.reply_token,
