@@ -59,14 +59,14 @@ def handle_message(event):
                         TextSendMessage(text="メニューから選んでね！！\n1 : クイズをする\n2 : お話をする\n3 : 物語を作る\n4 : 漫画を検索する"),
                     ]
                 )
-            if (event.message.text == "ありがとう！") or (event.message.text == "ありがとう") or (event.message.text == "ありがと！") or (event.message.text == "ありがと"):
+            elif (event.message.text == "ありがとう！") or (event.message.text == "ありがとう") or (event.message.text == "ありがと！") or (event.message.text == "ありがと"):
                 line_bot_api.reply_message(
                     event.reply_token,
                     [
                         TextSendMessage(text="どういたしまして！またね" + chr(0x100033)),
                     ]
             )
-            if (event.message.text == "1") or (event.message.text == "クイズしようぜ"):
+            elif (event.message.text == "1") or (event.message.text == "クイズしようぜ"):
                 qui.change_db("quize")
                 line_bot_api.reply_message(
                         event.reply_token,
@@ -74,6 +74,14 @@ def handle_message(event):
                             TextSendMessage(text="やりましょう"),
                         ]
                 )
+            elif (event.message.text == "終了") or (event.message.text == "バイバイ"):
+            qui.change_db("menu")
+            line_bot_api.reply_message(
+                    event.reply_token,
+                    [
+                        TextSendMessage(text="またね"),
+                    ]
+            )
             else:
                 line_bot_api.reply_message(
                     event.reply_token,
@@ -91,6 +99,14 @@ def handle_message(event):
                         TextSendMessage(text="成功です。"),
                     ]
                 )
+            elif (event.message.text == "終了") or (event.message.text == "バイバイ"):
+            qui.change_db("menu")
+            line_bot_api.reply_message(
+                    event.reply_token,
+                    [
+                        TextSendMessage(text="またね"),
+                    ]
+            )
     #word = event.message.text
     #manga_title = pat.titlename(title_list)
     #text = manga_title[int(word)]

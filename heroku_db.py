@@ -124,5 +124,5 @@ def make_db(name,act):
 #print(table)
 
   
-#t=get_db()
+t=get_db()
 
