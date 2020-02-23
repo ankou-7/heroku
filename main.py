@@ -75,7 +75,7 @@ def handle_message(event):
                 q_list,a_list = pat.make_quize(pt_list) #問題と答えをリストにして格納
                 Q,A = pat.random_quize(q_list,a_list) #格納したリストからランダムに１つ取り出す
                 hinto = pat.make_hinto(A,a_list)
-                qui.change_quize_db(Q,A,hinto[0],hinto[1],hinnto[2],hinto[3])
+                qui.change_quize_db(Q,A,hinto[0],hinto[1],hinto[2],hinto[3])
                 qui.change_db("quize","activity")
                 line_bot_api.reply_message(
                         event.reply_token,
