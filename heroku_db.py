@@ -200,13 +200,15 @@ def delete_table(table):
 #name = "activity"
 #table = """CREATE TABLE """ + name + """ (activity varchar(30))"""
 #print(table)
-#change_quize_db("おに","犬")
-#a , b = get_quize_db()
-#print(get_quize_db()[0])
-#delete_table("quize_table")
+    
+#最初の状態に戻す
 #change_db("menu","activity")
 #change_db("0","flag")
-    
+#a , b = get_db()
+
+#change_quize_db("おに","犬")
+#print(get_quize_db()[0])
+#delete_table("quize_table")
 #make_db("quize_table")
 #t,u,h1,h2,h3,h4=get_quize_db()
 
