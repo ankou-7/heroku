@@ -72,7 +72,7 @@ def handle_message(event):
                     ]
             )
             elif (event.message.text == "1") or (event.message.text == "クイズしようぜ"):
-                Q,A = pat.random_quize(pat.make_quize(bunlist)[0],pat.make_quize(bunlist)[1])
+                Q,A = pat.random_quize(pat.make_quize(pt_list)[0],pat.make_quize(pt_list)[1])
                 qui.change_quize_db(Q,A)
                 qui.change_db("quize","activity")
                 line_bot_api.reply_message(
@@ -132,7 +132,7 @@ def handle_message(event):
                     )
             elif(flag==1):
                 if (event.message.text == "はい"):
-                    Q,A = pat.random_quize(pat.make_quize(bunlist)[0],pat.make_quize(bunlist)[1])
+                    Q,A = pat.random_quize(pat.make_quize(pt_list)[0],pat.make_quize(pt_list)[1])
                     qui.change_quize_db(Q,A)
                     qui.change_db("0","flag")
                     line_bot_api.reply_message(
