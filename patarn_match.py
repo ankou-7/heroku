@@ -7,6 +7,7 @@ Created on Fri Feb 21 03:04:00 2020
 """
 
 import re
+import random
 
 def kuuhakujokyo(list):
     count=0;
@@ -50,12 +51,30 @@ def make_kiji():
     
     return list
 
-def make_quize(bunlist):
-    i=bunlist[2].find("による")
-    j=bunlist[2].find("、")
-    ans=bunlist[2][j+1:i]
-    qui=bunlist[2].replace(ans, "誰")
-    qui=qui+"ですか？"
+def bun_patarn(kiji_list):
+    pt_list={}
+    patarn="による日本の少年漫画作品"
+    for n in range(len(kiji_list)-1):
+        bunlist=kuuhakujokyo(re.split('[\n。\t]', kiji_list[n]))
+        for i in range(len(bunlist)):
+            if (patarn in bunlist[i] and '『' in bunlist[i] and '』' in bunlist[i]):
+                pt_list[n]=bunlist[i]
+                print("番号%d : %s" % (n,bunlist[i]))
+    return pt_list
+                
+def make_quize(pt_list):
+    qui=[]
+    ans=[]
+    bunlist=list(pt_list.values())
+    for i in range(len(bunlist)):
+        if i==5:
+            continue
+        c=len(qui)
+        k=bunlist[i].find("による")
+        j=bunlist[i].find("、")
+        ans.append(bunlist[i][j+1:k])
+        q=bunlist[i].replace(ans[c], "誰")
+        qui.append(q+"ですか？")
     return qui,ans
 #    print(quize+"ですか？")
 #    print("解答")
@@ -64,8 +83,15 @@ def make_quize(bunlist):
 #        print("正解")
 #    else:
 #        print("不正解")
+    
+def random_quize(qui,ans):
+    n = random.randrange(len(qui))
+    
 
 kiji_list = make_kiji()
 title = titlename(kiji_list)
-bunlist=kuuhakujokyo(re.split('[\n。\t]', kiji_list[3485]))
-make_quize(bunlist)
+pt_list=bun_patarn(kiji_list)
+#bunlist=kuuhakujokyo(re.split('[\n。\t]', kiji_list[3485]))
+q,a = make_quize(pt_list)
+print(pt_list[23])
+print(random.randrange(2))

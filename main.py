@@ -45,6 +45,8 @@ def callback():
 kiji_list = pat.make_kiji()
 #漫画のタイトルを格納
 title = pat.titlename(kiji_list)
+#記事から特定の文を抽出
+pt_list=pat.bun_patarn(kiji_list)
 
 # MessageEvent
 @handler.add(MessageEvent, message=TextMessage)
@@ -70,8 +72,7 @@ def handle_message(event):
                     ]
             )
             elif (event.message.text == "1") or (event.message.text == "クイズしようぜ"):
-                bunlist = pat.kuuhakujokyo(re.split('[\n。\t]', kiji_list[3485]))
-                Q,A = pat.make_quize(bunlist)
+                Q,A = pat.random_quize(pat.make_quize(bunlist)[0],pat.make_quize(bunlist)[1])
                 qui.change_quize_db(Q,A)
                 qui.change_db("quize","activity")
                 line_bot_api.reply_message(
@@ -131,8 +132,7 @@ def handle_message(event):
                     )
             elif(flag==1):
                 if (event.message.text == "はい"):
-                    bunlist = pat.kuuhakujokyo(re.split('[\n。\t]', kiji_list[3862]))
-                    Q,A = pat.make_quize(bunlist)
+                    Q,A = pat.random_quize(pat.make_quize(bunlist)[0],pat.make_quize(bunlist)[1])
                     qui.change_quize_db(Q,A)
                     qui.change_db("0","flag")
                     line_bot_api.reply_message(
