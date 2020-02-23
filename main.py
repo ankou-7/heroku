@@ -121,7 +121,14 @@ def handle_message(event):
                             TextSendMessage(text="もう一問やりますか？\n【はい/いいえ】"),
                         ]
                     )
-                else:
+                elif (event.message.text == "ヒント"):
+                    line_bot_api.reply_message(
+                       event.reply_token,
+                       [
+                            TextSendMessage(text="4択にしたよ。\n4つの中から選んでね！！"),
+                        ]
+                    )
+                elif (event.message.text != "ヒント") or (event.message.text != answer):
                     qui.change_db("1","flag")
                     line_bot_api.reply_message(
                        event.reply_token,

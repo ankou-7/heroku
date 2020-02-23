@@ -51,6 +51,8 @@ def make_kiji():
     
     return list
 
+###############################################################################
+    
 def bun_patarn(kiji_list):
     pt_list={}
     patarn="による日本の少年漫画作品"
@@ -83,15 +85,84 @@ def make_quize(pt_list):
 #        print("正解")
 #    else:
 #        print("不正解")
+
+###############################################################################
+    
+def bun_patarn2(kiji_list):
+    pt_list={}
+    patarn="通称「"
+    for n in range(len(kiji_list)-1):
+        bunlist=kuuhakujokyo(re.split('[\n。\t]', kiji_list[n]))
+        for i in range(len(bunlist)):
+            if i < 4:
+                if (patarn in bunlist[i] and '」' in bunlist[i]):
+                    if len(bunlist[i]) < 10:
+                        pt_list[n]=bunlist[i]
+                        print("番号%d : %s" % (n,bunlist[i]))
+    return pt_list
+
+def make_quize2(pt_list,title):
+    qui=[]
+    ans=[]
+    bunlist=list(pt_list.values())
+    title_num = list(pt_list.keys())
+    for i in range(len(bunlist)):
+        qui.append(title[title_num[i]] + "は、" + bunlist[i] + "と呼ばれているか？\n【はい/いいえ】")
+        ans.append("はい")
+        qui.append(title[title_num[i]] + "は、通称何と呼ばれているか？")
+        a=bunlist[i].replace('通称「', '').replace('」', '')
+        ans.append(a)
+    return qui,ans
+
+###############################################################################
+def bun_patarn3(kiji_list):
+    pt_list={}
+    patarn="連載中"
+    for n in range(len(kiji_list)-1):
+        bunlist=kuuhakujokyo(re.split('[\n。\t]', kiji_list[n]))
+        for i in range(len(bunlist)):
+            if i < 5:
+                if (patarn in bunlist[i] and '『' in bunlist[i] and '』' in bunlist[i]):
+                    pt_list[n]=bunlist[i]
+                    print("番号%d : %s" % (n,bunlist[i]))
+    return pt_list
+
+def make_quize3(pt_list,title):
+    qui=[]
+    ans=[]
+    bunlist=list(pt_list.values())
+    title_num = list(pt_list.keys())
+    for i in range(len(bunlist)):
+        qui.append(title[title_num[i]] + "は、" + bunlist[i] + "と呼ばれているか？\n【はい/いいえ】")
+        ans.append("はい")
+        qui.append(title[title_num[i]] + "は、通称何と呼ばれているか？")
+        a=bunlist[i].replace('通称「', '').replace('」', '')
+        ans.append(a)
+    return qui,ans
+    
+###############################################################################
+    
+def rensyu_patarn(kiji_list):
+    pt_list={}
+    for n in range(len(kiji_list)-1):
+        bunlist=kuuhakujokyo(re.split('[\n。\t]', kiji_list[n]))
+        for i in range(len(bunlist)):
+            if ("主人公" in bunlist[i]): #and '' in bunlist[i]
+                pt_list[n]=bunlist[i]
+                print("番号%d : %s" % (n,bunlist[i]))
+    return pt_list
     
 def random_quize(qui,ans):
     n = random.randrange(len(qui))
     return qui[n], ans[n]
     
 
-#kiji_list = make_kiji()
-#title = titlename(kiji_list)
-#pt_list=bun_patarn(kiji_list)
+kiji_list = make_kiji()
+title = titlename(kiji_list)
+#pt_list=bun_patarn3(kiji_list)
+pt_list = rensyu_patarn(kiji_list)
+#print(pt_list.keys())
+#print(kiji_list[2327])
 ##bunlist=kuuhakujokyo(re.split('[\n。\t]', kiji_list[3485]))
-#q,a = make_quize(pt_list)
+#q,a = make_quize2(pt_list,title)
 #Q,A = random_quize(make_quize(pt_list)[0],make_quize(pt_list)[1])
