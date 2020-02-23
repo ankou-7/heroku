@@ -86,12 +86,12 @@ def make_quize(pt_list):
     
 def random_quize(qui,ans):
     n = random.randrange(len(qui))
+    return qui[n], ans[n]
     
 
-kiji_list = make_kiji()
-title = titlename(kiji_list)
-pt_list=bun_patarn(kiji_list)
-#bunlist=kuuhakujokyo(re.split('[\n。\t]', kiji_list[3485]))
-q,a = make_quize(pt_list)
-print(pt_list[23])
-print(random.randrange(2))
+#kiji_list = make_kiji()
+#title = titlename(kiji_list)
+#pt_list=bun_patarn(kiji_list)
+##bunlist=kuuhakujokyo(re.split('[\n。\t]', kiji_list[3485]))
+#q,a = make_quize(pt_list)
+#Q,A = random_quize(make_quize(pt_list)[0],make_quize(pt_list)[1])
