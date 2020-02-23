@@ -152,17 +152,31 @@ def rensyu_patarn(kiji_list):
                 print("番号%d : %s" % (n,bunlist[i]))
     return pt_list
     
+###############################################################################
+    
 def random_quize(qui,ans):
     n = random.randrange(len(qui))
     return qui[n], ans[n]
     
+def make_hinto(ans,ans_list):
+    hinto=[]
+    a = ans_list.index(ans) #答えが格納されているインデックスクを返す
+    while len(hinto) < 3:
+        n = random.randrange(len(ans_list))
+        if n != a:
+            hinto.append(ans_list[n])
+    hinto.append(ans)
+    random.shuffle(hinto)
+    return hinto
 
-kiji_list = make_kiji()
-title = titlename(kiji_list)
-#pt_list=bun_patarn3(kiji_list)
-pt_list = rensyu_patarn(kiji_list)
-#print(pt_list.keys())
-#print(kiji_list[2327])
-##bunlist=kuuhakujokyo(re.split('[\n。\t]', kiji_list[3485]))
-#q,a = make_quize2(pt_list,title)
+#kiji_list = make_kiji()
+#title = titlename(kiji_list)
+#pt_list=bun_patarn(kiji_list)
+##pt_list = rensyu_patarn(kiji_list)
+##print(pt_list.keys())
+##print(kiji_list[2327])
+###bunlist=kuuhakujokyo(re.split('[\n。\t]', kiji_list[3485]))
+##q,a = make_quize2(pt_list,title)
+#q,a = make_quize(pt_list)
 #Q,A = random_quize(make_quize(pt_list)[0],make_quize(pt_list)[1])
+#hinto = make_hinto(A,a)

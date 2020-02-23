@@ -72,8 +72,10 @@ def handle_message(event):
                     ]
             )
             elif (event.message.text == "1") or (event.message.text == "クイズしようぜ"):
-                Q,A = pat.random_quize(pat.make_quize(pt_list)[0],pat.make_quize(pt_list)[1])
-                qui.change_quize_db(Q,A)
+                q_list,a_list = pat.make_quize(pt_list) #問題と答えをリストにして格納
+                Q,A = pat.random_quize(q_list,a_list) #格納したリストからランダムに１つ取り出す
+                hinto = pat.make_hinto(A,a_list)
+                qui.change_quize_db(Q,A,hinto[0],hinto[1],hinnto[2],hinto[3])
                 qui.change_db("quize","activity")
                 line_bot_api.reply_message(
                         event.reply_token,
@@ -111,6 +113,7 @@ def handle_message(event):
         if event.type == "message":
             flag=int(qui.get_db()[1])
             answer=qui.get_quize_db()[1]
+            h1,h2,h3,h4 = qui.get_quize_db()[2],qui.get_quize_db()[3],qui.get_quize_db()[4],qui.get_quize_db()[5]
             if (flag==0):
                 if (event.message.text == answer):
                     qui.change_db("1","flag")
@@ -122,10 +125,12 @@ def handle_message(event):
                         ]
                     )
                 elif (event.message.text == "ヒント"):
+                    
                     line_bot_api.reply_message(
                        event.reply_token,
                        [
                             TextSendMessage(text="4択にしたよ。\n4つの中から選んでね！！"),
+                            TextSendMessage(text="1 " + h1 + "\n2 " + h2 + "\n3 " + h3 + "\n4 " + h4),
                         ]
                     )
                 elif (event.message.text != "ヒント") or (event.message.text != answer):

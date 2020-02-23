@@ -24,14 +24,15 @@ def make_db(name):
     
     # テーブルの作成(すでにあると使えない)
     table = """CREATE TABLE """ + name + """ (activity varchar(30), flag int(3))"""
-    table2 = """CREATE TABLE """ + name + """ (Quize varchar(100), Answer varchar(100))"""
-    cursor.execute(table)
+    table2 = """CREATE TABLE """ + name + """ (Quize varchar(100), Answer varchar(100)
+    , hinto1 varchar(30), hinto2 varchar(30), hinto3 varchar(30), hinto4 varchar(30))"""
+    cursor.execute(table2)
 
     
     #データの追加
     text="""insert into activity (activity,flag) values("menu",0)"""
-    text2="""insert into quize_table (Quize,Answer) values("a","b")"""
-    cursor.execute(text)
+    text2="""insert into quize_table (Quize,Answer,hinto1,hinto2,hinto3,hinto4) values("a","b","c","d","e","f")"""
+    cursor.execute(text2)
     
     # 保存を実行
     connection.commit()
@@ -130,7 +131,7 @@ def get_quize_db():
 #    print(rows)
     for row in cursor:
         #print(row)
-        return row['Quize'],row['Answer']
+        return row['Quize'],row['Answer'],row['hinto1'],row['hinto2'],row['hinto3'],row['hinto4']
      
     connection.commit()
     connection.close()
@@ -191,12 +192,13 @@ def delete_table(table):
 #name = "activity"
 #table = """CREATE TABLE """ + name + """ (activity varchar(30))"""
 #print(table)
-#make_db("activity")
 #change_quize_db("おに","犬")
 #a , b = get_quize_db()
 #print(get_quize_db()[0])
-#delete_table("activity")
+#delete_table("quize_table")
 #change_db("menu","activity")
 #change_db("0","flag")
-#t,u=get_db()
+    
+#make_db("quize_table")
+#t,u,h1,h2,h3,h4=get_quize_db()
 
