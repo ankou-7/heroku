@@ -91,7 +91,7 @@ def get_db():
     connection.close()
     
 #########################################################################################
-def change_quize_db(qui,ans):
+def change_quize_db(qui,ans,h1,h2,h3,h4):
     connection = pymysql.connect(
             host='us-cdbr-iron-east-04.cleardb.net',
             user='ba76092fa5db19',
@@ -107,6 +107,14 @@ def change_quize_db(qui,ans):
     text="""UPDATE quize_table set Quize='""" + qui + """'"""
     cursor.execute(text)
     text="""UPDATE quize_table set Answer='""" + ans + """'"""
+    cursor.execute(text)
+    text="""UPDATE quize_table set hinto1='""" + h1 + """'"""
+    cursor.execute(text)
+    text="""UPDATE quize_table set hinto2='""" + h2 + """'"""
+    cursor.execute(text)
+    text="""UPDATE quize_table set hinto3='""" + h3 + """'"""
+    cursor.execute(text)
+    text="""UPDATE quize_table set hinto4='""" + h4 + """'"""
     cursor.execute(text)
     
     connection.commit()
