@@ -12,6 +12,7 @@ from linebot.models import (
 )
 import re
 import os
+import numpy as np
 import wikipedia
 import patarn_match as pat
 import heroku_db as qui
