@@ -45,7 +45,7 @@ def sentence_to_vector(sentence,max_length_x,n_char,char_indices):
 #encoder_model = load_model('make_monogatari/model/encoder_model.h5')
 #decoder_model = load_model('make_monogatari/model/decoder_model.h5')
 
-def respond(message, beta=5, max_length_x, n_char, char_indices, encoder_model, decoder_model):
+def respond(message, max_length_x, n_char, char_indices, encoder_model, decoder_model, beta=5):
     vec = sentence_to_vector(message,max_length_x,n_char,char_indices)  # 文字列をone-hot表現に変換
     state_value = encoder_model.predict(vec)
     y_decoder = np.zeros((1, 1, n_char))  # decoderの出力を格納する配列
@@ -89,4 +89,4 @@ def make_story():
         response = respond(message)
         print(bot_name + ": " + response)
         
-#make_story()
+make_story()
