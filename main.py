@@ -15,6 +15,7 @@ import os
 import wikipedia
 import patarn_match as pat
 import heroku_db as qui
+import make_monogatari as mono
 
 # 軽量なウェブアプリケーションフレームワーク:Flask
 app = Flask(__name__)
@@ -77,6 +78,17 @@ def handle_message(event):
                 hinto = pat.make_hinto(A,a_list)
                 qui.change_quize_db(Q,A,hinto[0],hinto[1],hinto[2],hinto[3])
                 qui.change_db("quize","activity")
+                line_bot_api.reply_message(
+                        event.reply_token,
+                        [
+                            TextSendMessage(text="やりましょう"),
+                            TextSendMessage(text="問題を出すので答えて下さい"),
+                            TextSendMessage(text="【問題】\n" + Q),
+                        ]
+                )
+            elif (event.message.text == "3"):
+                #qui.change_db("quize","activity")
+                mono.make_story()
                 line_bot_api.reply_message(
                         event.reply_token,
                         [

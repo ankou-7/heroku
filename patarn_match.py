@@ -61,7 +61,7 @@ def bun_patarn(kiji_list):
         for i in range(len(bunlist)):
             if (patarn in bunlist[i] and '『' in bunlist[i] and '』' in bunlist[i]):
                 pt_list[n]=bunlist[i]
-                print("番号%d : %s" % (n,bunlist[i]))
+                #print("番号%d : %s" % (n,bunlist[i]))
     return pt_list
                 
 def make_quize(pt_list):
@@ -78,13 +78,6 @@ def make_quize(pt_list):
         q=bunlist[i].replace(ans[c], "誰")
         qui.append(q+"ですか？")
     return qui,ans
-#    print(quize+"ですか？")
-#    print("解答")
-#    user_ans=input()
-#    if user_ans==ans:
-#        print("正解")
-#    else:
-#        print("不正解")
 
 ###############################################################################
     
@@ -171,11 +164,11 @@ def make_hinto(ans,ans_list):
 
 #kiji_list = make_kiji()
 #title = titlename(kiji_list)
-#pt_list=bun_patarn(kiji_list)
-##pt_list = rensyu_patarn(kiji_list)
-##print(pt_list.keys())
-##print(kiji_list[2327])
-###bunlist=kuuhakujokyo(re.split('[\n。\t]', kiji_list[3485]))
+#pt_list=bun_patarn3(kiji_list)
+###pt_list = rensyu_patarn(kiji_list)
+###print(pt_list.keys())
+###print(kiji_list[2327])
+#bunlist=kuuhakujokyo(re.split('[\n。\t]', kiji_list[3485]))
 ##q,a = make_quize2(pt_list,title)
 #q,a = make_quize(pt_list)
 #Q,A = random_quize(make_quize(pt_list)[0],make_quize(pt_list)[1])
