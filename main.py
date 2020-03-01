@@ -203,13 +203,22 @@ def handle_message(event):
                     )
     if activity == 'make_story':
         if event.type == "message":
-            message = event.message.text #入力文
             if (event.message.text != "終了"):
+                message = event.message.text #入力文
                 if mono.is_invalid(message, chars_list):
-                    TextSendMessage(text="ひらがなか、カタカナで入力してね。")
+                    line_bot_api.reply_message(
+                            event.reply_token,
+                            [
+                                    TextSendMessage(text="ひらがなか、カタカナで入力してね。")
+                            ]
+                    )
                 else:
-                    TextSendMessage(text=mono.respond(message, max_length_x, n_char, char_indices, encoder_model, decoder_model)
-                
+                    line_bot_api.reply_message(
+                            event.reply_token,
+                            [
+                                    TextSendMessage(text=mono.respond(message, max_length_x, n_char, char_indices, encoder_model, decoder_model))
+                            ]
+                    )
             elif (event.message.text == "終了"):
                 qui.change_db("menu","activity")
                 line_bot_api.reply_message(
@@ -217,7 +226,7 @@ def handle_message(event):
                         [
                             TextSendMessage(text="またね"),
                         ]
-                    )
+            )
     if activity == 'wiki':
         if event.type == "message":
             if (event.message.text != "終了"):
