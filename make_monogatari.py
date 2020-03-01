@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Mar  2 02:47:27 2020
+
+@author: yasuekouki
+"""
+
 import numpy as np
 import pickle
 from keras.models import load_model
