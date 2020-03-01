@@ -3,3 +3,4 @@ line-bot-sdk==1.15.0
 wikipedia==1.4.0
 PyMySQL==0.9.3
 numpy==1.18.1
+Keras==2.3.1
