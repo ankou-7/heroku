@@ -10,14 +10,14 @@ from linebot.models import (
    FollowEvent, MessageEvent, TextMessage, TextSendMessage, ImageMessage, ImageSendMessage, TemplateSendMessage, ButtonsTemplate, PostbackTemplateAction, MessageTemplateAction, URITemplateAction,
        QuickReplyButton, MessageAction, QuickReply,
 )
-import re
+from keras.models import load_model
+
 import os
 import wikipedia
 import patarn_match as pat
 import heroku_db as qui
 import make_monogatari as mono
 import pickle
-from keras.models import load_model
 
 # 軽量なウェブアプリケーションフレームワーク:Flask
 app = Flask(__name__)
