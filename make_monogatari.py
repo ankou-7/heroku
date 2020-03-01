@@ -13,7 +13,7 @@ import os
 
 os.environ ['KMP_DUPLICATE_LIB_OK'] = 'True'
 
-with open('kana_chars_monogatari.pickle', mode='rb') as f:
+with open('make_monogatari/kana_chars_monogatari.pickle', mode='rb') as f:
     chars_list = pickle.load(f)
 
 def is_invalid(message):
@@ -41,8 +41,8 @@ def sentence_to_vector(sentence):
         vector[0][j][char_indices[char]] = 1
     return vector
 
-encoder_model = load_model('model/encoder_model.h5')
-decoder_model = load_model('model/decoder_model.h5')
+encoder_model = load_model('make_monogatari/model/encoder_model.h5')
+decoder_model = load_model('make_monogatari/model/decoder_model.h5')
 
 def respond(message, beta=5):
     vec = sentence_to_vector(message)  # 文字列をone-hot表現に変換
