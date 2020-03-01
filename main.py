@@ -208,7 +208,7 @@ def handle_message(event):
                 if mono.is_invalid(message, chars_list):
                     TextSendMessage(text="ひらがなか、カタカナで入力してね。")
                 else:
-                    TextSendMessage(text=mono.respond(message, max_length_x, n_char, char_indices, encoder_model, decoder_model))
+                    TextSendMessage(text=mono.respond(message, max_length_x, n_char, char_indices, encoder_model, decoder_model)
                 
             elif (event.message.text == "終了"):
                 qui.change_db("menu","activity")
