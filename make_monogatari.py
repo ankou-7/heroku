@@ -7,16 +7,17 @@ Created on Mon Mar  2 02:47:27 2020
 """
 
 import numpy as np
-import pickle
+#import pickle
 from keras.models import load_model
 import os
 
 os.environ ['KMP_DUPLICATE_LIB_OK'] = 'True'
 
-with open('make_monogatari/kana_chars_monogatari.pickle', mode='rb') as f:
-    chars_list = pickle.load(f)
+#with open('make_monogatari/kana_chars_monogatari.pickle', mode='rb') as f:
+#    chars_list = pickle.load(f)
 
-def is_invalid(message):
+#辞書に廃いていなければTrueを返す
+def is_invalid(message, chars_list):
     is_invalid =False
     for char in message:
         if char not in chars_list:
@@ -24,28 +25,28 @@ def is_invalid(message):
     return is_invalid
 
 # インデックスと文字で辞書を作成
-char_indices = {}
-for i, char in enumerate(chars_list):
-    char_indices[char] = i
-indices_char = {}
-for i, char in enumerate(chars_list):
-    indices_char[i] = char
-    
-n_char = len(chars_list)
-max_length_x = 128
+#char_indices = {}
+#for i, char in enumerate(chars_list):
+#    char_indices[char] = i
+#indices_char = {}
+#for i, char in enumerate(chars_list):
+#    indices_char[i] = char
+#    
+#n_char = len(chars_list)
+#max_length_x = 128
 
 # 文章をone-hot表現に変換する関数
-def sentence_to_vector(sentence):
+def sentence_to_vector(sentence,max_length_x,n_char,char_indices):
     vector = np.zeros((1, max_length_x, n_char), dtype=np.bool)
     for j, char in enumerate(sentence):
         vector[0][j][char_indices[char]] = 1
     return vector
 
-encoder_model = load_model('make_monogatari/model/encoder_model.h5')
-decoder_model = load_model('make_monogatari/model/decoder_model.h5')
+#encoder_model = load_model('make_monogatari/model/encoder_model.h5')
+#decoder_model = load_model('make_monogatari/model/decoder_model.h5')
 
-def respond(message, beta=5):
-    vec = sentence_to_vector(message)  # 文字列をone-hot表現に変換
+def respond(message, beta=5, max_length_x, n_char, char_indices, encoder_model, decoder_model):
+    vec = sentence_to_vector(message,max_length_x,n_char,char_indices)  # 文字列をone-hot表現に変換
     state_value = encoder_model.predict(vec)
     y_decoder = np.zeros((1, 1, n_char))  # decoderの出力を格納する配列
     y_decoder[0][0][char_indices['\t']] = 1  # decoderの最初の入力はタブ。one-hot表現にする。
@@ -87,3 +88,5 @@ def make_story():
                 
         response = respond(message)
         print(bot_name + ": " + response)
+        
+#make_story()

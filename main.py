@@ -16,6 +16,7 @@ import wikipedia
 import patarn_match as pat
 import heroku_db as qui
 import make_monogatari as mono
+import pickle
 
 # 軽量なウェブアプリケーションフレームワーク:Flask
 app = Flask(__name__)
@@ -48,6 +49,24 @@ kiji_list = pat.make_kiji()
 title = pat.titlename(kiji_list)
 #記事から特定の文を抽出
 pt_list=pat.bun_patarn(kiji_list)
+
+####################################
+with open('make_monogatari/kana_chars_monogatari.pickle', mode='rb') as f:
+    chars_list = pickle.load(f)
+
+char_indices = {}
+for i, char in enumerate(chars_list):
+    char_indices[char] = i
+indices_char = {}
+for i, char in enumerate(chars_list):
+    indices_char[i] = char
+    
+n_char = len(chars_list)
+max_length_x = 128
+
+encoder_model = load_model('make_monogatari/model/encoder_model.h5')
+decoder_model = load_model('make_monogatari/model/decoder_model.h5')
+###################################
 
 # MessageEvent
 @handler.add(MessageEvent, message=TextMessage)
@@ -87,14 +106,12 @@ def handle_message(event):
                         ]
                 )
             elif (event.message.text == "3"):
-                #qui.change_db("quize","activity")
-                mono.make_story()
+                qui.change_db("make_story","activity")
+                #mono.make_story()
                 line_bot_api.reply_message(
                         event.reply_token,
                         [
-                            TextSendMessage(text="やりましょう"),
-                            TextSendMessage(text="問題を出すので答えて下さい"),
-                            TextSendMessage(text="【問題】\n" + Q),
+                            TextSendMessage(text="いきますよ"),
                         ]
                 )
             elif (event.message.text == "4") or (event.message.text == "検索したい"):
@@ -183,7 +200,23 @@ def handle_message(event):
                                 TextSendMessage(text="【はい/いいえ】で答えてね"),
                             ]
                     )
-                    
+    if activity == 'make_story':
+        if event.type == "message":
+            message = event.message.text #入力文
+            if (event.message.text != "終了"):
+                if mono.is_invalid(message, chars_list):
+                    TextSendMessage(text="ひらがなか、カタカナで入力してね。")
+                else:
+                    TextSendMessage(text=mono.respond(message, max_length_x, n_char, char_indices, encoder_model, decoder_model))
+                
+            elif (event.message.text == "終了"):
+                qui.change_db("menu","activity")
+                line_bot_api.reply_message(
+                        event.reply_token,
+                        [
+                            TextSendMessage(text="またね"),
+                        ]
+                    )
     if activity == 'wiki':
         if event.type == "message":
             if (event.message.text != "終了"):
